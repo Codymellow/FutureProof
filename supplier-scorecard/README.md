@@ -9,17 +9,9 @@ Most supplier performance conversations start with "I feel like they've been bet
 1. **Scores suppliers across 4 pillars**: Ship-on-Time (SOT), Quality (PPM), Pricing (vs. market inflation), Communication (stakeholder survey)
 2. **Computes a weighted composite** (35% SOT + 25% Quality + 20% Pricing + 20% Communication)
 3. **Classifies tiers**: Strategic / Preferred / Approved / Conditional — with red-flag overrides
-4. **Generates external PDFs** for supplier business reviews (strips sensitive competitive data)
+4. **Generates external PDFs** for supplier business reviews (internal data stripped automatically)
 5. **Tracks trends** — month-over-month, quarter-over-quarter performance changes
 6. **Surfaces exceptions** — suppliers crossing tier boundaries or hitting multiple red pillars
-
-## Scoring Architecture
-
-![4-Pillar Scoring Model](assets/scoring-model.svg)
-
-## Example: Tier Classification in Action
-
-![Tier Examples](assets/tier-examples.svg)
 
 ## Pillar Details
 
@@ -55,7 +47,33 @@ Most supplier performance conversations start with "I feel like they've been bet
 | **Approved** | Composite ≥65, or exactly 1 red pillar |
 | **Conditional** | Composite <65, or 2+ red pillars |
 
-**Red-flag override**: Any supplier with 2+ red pillars is automatically Conditional regardless of composite score.
+**Red-flag override**: Any supplier with 2+ red pillars is automatically Conditional regardless of composite score. This is a deliberate business rule — a supplier can't average their way out of multiple critical failures. A 95 composite with two red pillars still means "we need to talk."
+
+## Quality & Correctness
+
+The scoring engine is validated with **property-based testing** (fast-check). Rather than testing individual examples, these properties must hold for *every possible input*:
+
+| Property | Business Rule It Enforces |
+|----------|--------------------------|
+| SOT score always in [0, 100] | No impossible percentages shown to stakeholders |
+| PPM normalization is monotonically decreasing | Fewer defects always = better score (no inversions) |
+| Composite always in [0, 100] | Score is always interpretable |
+| Tier is monotonically non-decreasing with composite | Higher score never produces a worse tier (holding RAG constant) |
+| **2+ red pillars → Conditional always** | Multiple critical failures can't be averaged away |
+| Survey average always in [1, 10] | Output stays within input domain |
+
+These aren't just engineering tests — they're the mathematical guarantees that make the scoring defensible when a supplier challenges their tier classification.
+
+## External Output Mode
+
+In real supplier management, you need two versions of the scorecard: one for internal decision-making and one you can hand to the supplier during a quarterly business review. Giving a supplier their network comparison data or your internal composite score creates leverage problems. Showing them their raw communication survey scores poisons the next survey.
+
+The tool handles this with an `outputMode` context that controls data visibility across every component:
+
+- **Internal mode**: Full composite scores, network comparison rankings, due-date change analytics, raw communication numbers, and competitive benchmarks
+- **External mode**: Pillar-level RAG status, trend direction, late-orders histogram, and methodology — everything a supplier needs to understand their performance without seeing your negotiating data
+
+External PDFs are generated via Puppeteer rendering the same React components with `?output=external`. Same data model, same source of truth, different visibility — so internal and external can never drift out of sync.
 
 ## Quick Start
 
@@ -118,31 +136,15 @@ supplier-scorecard/
 
 ## Tech Stack
 
-- **React 19** + **TypeScript** — type-safe UI
+- **React 19** + **TypeScript** — type-safe UI with compile-time validation of the scoring model
 - **Vite** — fast dev server and build
-- **Tailwind CSS** — utility-first styling
-- **Zustand** — lightweight state management
-- **TanStack Table** — headless sortable/filterable tables
-- **Recharts** — declarative charts
+- **Tailwind CSS** — utility-first styling (dark theme, Satoshi + JetBrains Mono fonts)
+- **Zustand** — lightweight state management (separate stores per domain)
+- **TanStack Table** — headless sortable/filterable tables with saved filter presets
+- **Recharts** — sparklines, trend charts, histograms, heatmaps
 - **Vitest** + **fast-check** — unit + property-based testing
+- **Puppeteer** — PDF generation (renders React components server-side)
 - **FRED API** — public inflation benchmarks (free API key)
-
-## Correctness Properties (tested with fast-check)
-
-1. `computeSOTScore` always returns percentOnTime in [0, 100]
-2. `normalizePPM` is monotonically decreasing
-3. `computeComposite` result is always in [0, 100]
-4. Tier classification is monotonically non-decreasing with composite (holding RAG constant)
-5. 2+ red pillars always produces "Conditional" regardless of composite value
-6. `computeWeightedSurveyAverage` result is always in [1, 10] for inputs in [1, 10]
-
-## Output Modes
-
-The same UI renders two modes:
-- **Internal**: Full composite scores, network comparisons, due-date change analytics
-- **External**: Strips competitive data for sharing with suppliers during business reviews
-
-External PDFs are generated via Puppeteer rendering the React app with `?output=external`.
 
 ## License
 
