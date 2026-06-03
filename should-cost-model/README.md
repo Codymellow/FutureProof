@@ -15,7 +15,9 @@ Most sourcing teams negotiate against last year's price plus a gut feeling. This
 
 ## Architecture
 
-![Should-Cost Architecture](assets/architecture.svg)
+<picture>
+  <img alt="Should-Cost Architecture" src="assets/architecture.svg">
+</picture>
 
 ## Key Concepts
 

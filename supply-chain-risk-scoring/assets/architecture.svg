@@ -1,70 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="system-ui, -apple-system, sans-serif">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f172a"/>
-      <stop offset="100%" style="stop-color:#1e293b"/>
-    </linearGradient>
-  </defs>
-  <rect width="800" height="500" fill="url(#bg)" rx="12"/>
-  
-  <!-- Title -->
-  <text x="400" y="35" text-anchor="middle" fill="#f1f5f9" font-size="16" font-weight="bold">Supply Chain Risk Scoring — Pipeline Architecture</text>
-  
-  <!-- Data Sources -->
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#0f172a" rx="12"/>
+  <text x="400" y="35" text-anchor="middle" fill="#f1f5f9" font-size="16" font-weight="bold" font-family="sans-serif">Supply Chain Risk Scoring — Pipeline Architecture</text>
   <rect x="30" y="60" width="220" height="70" rx="8" fill="#1e293b" stroke="#334155"/>
-  <text x="140" y="82" text-anchor="middle" fill="#94a3b8" font-size="10">DATA INGESTION</text>
-  <text x="140" y="100" text-anchor="middle" fill="#f1f5f9" font-size="11">SOT History (CSV)</text>
-  <text x="140" y="116" text-anchor="middle" fill="#f1f5f9" font-size="11">Open PO List (CSV)</text>
-  
+  <text x="140" y="82" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="sans-serif">DATA INGESTION</text>
+  <text x="140" y="100" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="sans-serif">SOT History (CSV)</text>
+  <text x="140" y="116" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="sans-serif">Open PO List (CSV)</text>
   <rect x="290" y="60" width="220" height="70" rx="8" fill="#1e293b" stroke="#334155"/>
-  <text x="400" y="82" text-anchor="middle" fill="#94a3b8" font-size="10">PLANNING DATA</text>
-  <text x="400" y="100" text-anchor="middle" fill="#f1f5f9" font-size="11">Net Inventory × Safety Stock</text>
-  <text x="400" y="116" text-anchor="middle" fill="#f1f5f9" font-size="11">Demand • Production Plan</text>
-  
+  <text x="400" y="82" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="sans-serif">PLANNING DATA</text>
+  <text x="400" y="100" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="sans-serif">Net Inventory x Safety Stock</text>
+  <text x="400" y="116" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="sans-serif">Demand - Production Plan</text>
   <rect x="550" y="60" width="220" height="70" rx="8" fill="#1e293b" stroke="#334155"/>
-  <text x="660" y="82" text-anchor="middle" fill="#94a3b8" font-size="10">SUPPLIER METADATA</text>
-  <text x="660" y="100" text-anchor="middle" fill="#f1f5f9" font-size="11">Region • Category • DC</text>
-  <text x="660" y="116" text-anchor="middle" fill="#f1f5f9" font-size="11">Confirmation History</text>
-  
-  <!-- Arrows down -->
-  <path d="M140 130 L140 160 L400 160 L400 170" stroke="#3b82f6" fill="none" stroke-width="2" marker-end="url(#arrow)"/>
-  <path d="M400 130 L400 170" stroke="#3b82f6" fill="none" stroke-width="2"/>
-  <path d="M660 130 L660 160 L400 160" stroke="#3b82f6" fill="none" stroke-width="2"/>
-  
-  <!-- Feature Engineering -->
+  <text x="660" y="82" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="sans-serif">SUPPLIER METADATA</text>
+  <text x="660" y="100" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="sans-serif">Region - Category - DC</text>
+  <text x="660" y="116" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="sans-serif">Confirmation History</text>
+  <line x1="140" y1="130" x2="140" y2="160" stroke="#3b82f6" stroke-width="2"/>
+  <line x1="140" y1="160" x2="400" y2="160" stroke="#3b82f6" stroke-width="2"/>
+  <line x1="400" y1="130" x2="400" y2="170" stroke="#3b82f6" stroke-width="2"/>
+  <line x1="660" y1="130" x2="660" y2="160" stroke="#3b82f6" stroke-width="2"/>
+  <line x1="660" y1="160" x2="400" y2="160" stroke="#3b82f6" stroke-width="2"/>
   <rect x="150" y="170" width="500" height="80" rx="8" fill="#1e3a5f" stroke="#3b82f6"/>
-  <text x="400" y="192" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="bold">FEATURE ENGINEERING (25 FEATURES)</text>
-  <text x="200" y="215" fill="#f1f5f9" font-size="10">• Supplier OTIF rate</text>
-  <text x="200" y="232" fill="#f1f5f9" font-size="10">• Lead-time CV (Toyota's #1)</text>
-  <text x="400" y="215" fill="#f1f5f9" font-size="10">• Delivery date delta</text>
-  <text x="400" y="232" fill="#f1f5f9" font-size="10">• Days till ship (neg=past)</text>
-  <text x="570" y="215" fill="#f1f5f9" font-size="10">• Safety stock gap</text>
-  <text x="570" y="232" fill="#f1f5f9" font-size="10">• if_late_breach flag</text>
-  
-  <!-- Arrow -->
-  <path d="M400 250 L400 280" stroke="#3b82f6" fill="none" stroke-width="2"/>
-  
-  <!-- Model -->
+  <text x="400" y="192" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="bold" font-family="sans-serif">FEATURE ENGINEERING (25 FEATURES)</text>
+  <text x="200" y="215" fill="#f1f5f9" font-size="10" font-family="sans-serif">Supplier OTIF rate</text>
+  <text x="200" y="232" fill="#f1f5f9" font-size="10" font-family="sans-serif">Lead-time CV</text>
+  <text x="380" y="215" fill="#f1f5f9" font-size="10" font-family="sans-serif">Delivery date delta</text>
+  <text x="380" y="232" fill="#f1f5f9" font-size="10" font-family="sans-serif">Days till ship</text>
+  <text x="550" y="215" fill="#f1f5f9" font-size="10" font-family="sans-serif">Safety stock gap</text>
+  <text x="550" y="232" fill="#f1f5f9" font-size="10" font-family="sans-serif">if_late_breach flag</text>
+  <line x1="400" y1="250" x2="400" y2="280" stroke="#3b82f6" stroke-width="2"/>
   <rect x="200" y="280" width="400" height="60" rx="8" fill="#1e293b" stroke="#7c3aed"/>
-  <text x="400" y="302" text-anchor="middle" fill="#c4b5fd" font-size="10" font-weight="bold">MODEL + CALIBRATION</text>
-  <text x="400" y="322" text-anchor="middle" fill="#f1f5f9" font-size="11">LightGBM (400 trees) → Isotonic Calibration → P(late) ∈ (0,1)</text>
-  
-  <!-- Arrow -->
-  <path d="M400 340 L400 370" stroke="#7c3aed" fill="none" stroke-width="2"/>
-  
-  <!-- Output -->
+  <text x="400" y="302" text-anchor="middle" fill="#c4b5fd" font-size="10" font-weight="bold" font-family="sans-serif">MODEL + CALIBRATION</text>
+  <text x="400" y="322" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="sans-serif">LightGBM (400 trees) then Isotonic Calibration then P(late)</text>
+  <line x1="400" y1="340" x2="400" y2="370" stroke="#7c3aed" stroke-width="2"/>
   <rect x="100" y="370" width="600" height="70" rx="8" fill="#1e293b" stroke="#22c55e"/>
-  <text x="400" y="392" text-anchor="middle" fill="#86efac" font-size="10" font-weight="bold">SCORING OUTPUT</text>
-  <text x="200" y="415" text-anchor="middle" fill="#f1f5f9" font-size="11">risk_score = P(late) × $impact</text>
-  <text x="400" y="415" text-anchor="middle" fill="#f1f5f9" font-size="11">Tier: HIGH / MED / LOW</text>
-  <text x="600" y="415" text-anchor="middle" fill="#f1f5f9" font-size="11">Confidence band</text>
-  <text x="400" y="432" text-anchor="middle" fill="#94a3b8" font-size="10">Company-wide % rollup • Top drivers • Prediction ledger (Brier scoring)</text>
-  
-  <!-- Gate badge -->
+  <text x="400" y="392" text-anchor="middle" fill="#86efac" font-size="10" font-weight="bold" font-family="sans-serif">SCORING OUTPUT</text>
+  <text x="200" y="415" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="sans-serif">risk_score = P(late) x $impact</text>
+  <text x="400" y="415" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="sans-serif">Tier: HIGH / MED / LOW</text>
+  <text x="600" y="415" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="sans-serif">Confidence band</text>
+  <text x="400" y="432" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="sans-serif">Company-wide % rollup - Top drivers - Prediction ledger</text>
   <rect x="620" y="290" width="140" height="40" rx="6" fill="#14532d" stroke="#22c55e"/>
-  <text x="690" y="305" text-anchor="middle" fill="#86efac" font-size="9">GO/NO-GO GATE</text>
-  <text x="690" y="320" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="bold">PR-AUC • ECE • %-dev</text>
-  
-  <!-- Bottom stats -->
-  <text x="400" y="475" text-anchor="middle" fill="#64748b" font-size="10">Time-ordered 70/30 split • No temporal leakage • 10-day grace period • Append-only prediction ledger</text>
+  <text x="690" y="305" text-anchor="middle" fill="#86efac" font-size="9" font-family="sans-serif">GO/NO-GO GATE</text>
+  <text x="690" y="320" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="bold" font-family="sans-serif">PR-AUC - ECE - %-dev</text>
+  <text x="400" y="475" text-anchor="middle" fill="#64748b" font-size="10" font-family="sans-serif">Time-ordered 70/30 split | No temporal leakage | 10-day grace period | Append-only prediction ledger</text>
 </svg>

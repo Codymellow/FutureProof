@@ -1,56 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="system-ui, -apple-system, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
   <rect width="800" height="400" fill="#0f172a" rx="12"/>
-  
-  <text x="400" y="30" text-anchor="middle" fill="#f1f5f9" font-size="15" font-weight="bold">Should-Cost Modeling — How It Works</text>
-  
-  <!-- FRED API -->
+  <text x="400" y="30" text-anchor="middle" fill="#f1f5f9" font-size="15" font-weight="bold" font-family="sans-serif">Should-Cost Modeling — How It Works</text>
   <rect x="30" y="55" width="200" height="55" rx="8" fill="#1e293b" stroke="#3b82f6"/>
-  <text x="130" y="75" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="bold">FRED API (Public)</text>
-  <text x="130" y="93" text-anchor="middle" fill="#f1f5f9" font-size="10">Copper · Steel · Aluminum</text>
-  <text x="130" y="105" text-anchor="middle" fill="#94a3b8" font-size="9">PPI indices · FX rates</text>
-  
-  <!-- BOM Definition -->
+  <text x="130" y="75" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="bold" font-family="sans-serif">FRED API (Public)</text>
+  <text x="130" y="93" text-anchor="middle" fill="#f1f5f9" font-size="10" font-family="sans-serif">Copper - Steel - Aluminum</text>
+  <text x="130" y="105" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="sans-serif">PPI indices - FX rates</text>
   <rect x="300" y="55" width="200" height="55" rx="8" fill="#1e293b" stroke="#7c3aed"/>
-  <text x="400" y="75" text-anchor="middle" fill="#c4b5fd" font-size="10" font-weight="bold">BOM DEFINITION</text>
-  <text x="400" y="93" text-anchor="middle" fill="#f1f5f9" font-size="10">Components × Quantities</text>
-  <text x="400" y="105" text-anchor="middle" fill="#94a3b8" font-size="9">Each linked to a commodity driver</text>
-  
-  <!-- Labor -->
+  <text x="400" y="75" text-anchor="middle" fill="#c4b5fd" font-size="10" font-weight="bold" font-family="sans-serif">BOM DEFINITION</text>
+  <text x="400" y="93" text-anchor="middle" fill="#f1f5f9" font-size="10" font-family="sans-serif">Components x Quantities</text>
+  <text x="400" y="105" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="sans-serif">Each linked to a commodity driver</text>
   <rect x="570" y="55" width="200" height="55" rx="8" fill="#1e293b" stroke="#f59e0b"/>
-  <text x="670" y="75" text-anchor="middle" fill="#fde68a" font-size="10" font-weight="bold">LABOR RATES</text>
-  <text x="670" y="93" text-anchor="middle" fill="#f1f5f9" font-size="10">Regional hourly rates</text>
-  <text x="670" y="105" text-anchor="middle" fill="#94a3b8" font-size="9">CN $6.69 · MX $5.56 · US $28</text>
-  
-  <!-- Arrow -->
-  <path d="M130 110 L130 140 L400 140 L400 155" stroke="#3b82f6" fill="none" stroke-width="2"/>
-  <path d="M400 110 L400 155" stroke="#7c3aed" fill="none" stroke-width="2"/>
-  <path d="M670 110 L670 140 L400 140" stroke="#f59e0b" fill="none" stroke-width="2"/>
-  
-  <!-- Calculation Engine -->
+  <text x="670" y="75" text-anchor="middle" fill="#fde68a" font-size="10" font-weight="bold" font-family="sans-serif">LABOR RATES</text>
+  <text x="670" y="93" text-anchor="middle" fill="#f1f5f9" font-size="10" font-family="sans-serif">Regional hourly rates</text>
+  <text x="670" y="105" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="sans-serif">CN $6.69 - MX $5.56 - US $28</text>
+  <line x1="130" y1="110" x2="130" y2="140" stroke="#3b82f6" stroke-width="2"/>
+  <line x1="130" y1="140" x2="400" y2="140" stroke="#3b82f6" stroke-width="2"/>
+  <line x1="400" y1="110" x2="400" y2="155" stroke="#7c3aed" stroke-width="2"/>
+  <line x1="670" y1="110" x2="670" y2="140" stroke="#f59e0b" stroke-width="2"/>
+  <line x1="670" y1="140" x2="400" y2="140" stroke="#f59e0b" stroke-width="2"/>
+  <line x1="400" y1="140" x2="400" y2="155" stroke="#64748b" stroke-width="2"/>
   <rect x="150" y="155" width="500" height="70" rx="8" fill="#1e3a5f" stroke="#3b82f6"/>
-  <text x="400" y="177" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="bold">SHOULD-COST CALCULATION</text>
-  <text x="400" y="198" text-anchor="middle" fill="#f1f5f9" font-size="11">component_cost = qty × unit_cost × commodity_multiplier(month)</text>
-  <text x="400" y="215" text-anchor="middle" fill="#94a3b8" font-size="10">+ overhead (% of materials) + supplier margin → Should-Cost per unit</text>
-  
-  <!-- Outputs -->
-  <path d="M280 225 L280 255" stroke="#22c55e" fill="none" stroke-width="2"/>
-  <path d="M400 225 L400 255" stroke="#22c55e" fill="none" stroke-width="2"/>
-  <path d="M520 225 L520 255" stroke="#22c55e" fill="none" stroke-width="2"/>
-  
+  <text x="400" y="177" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="bold" font-family="sans-serif">SHOULD-COST CALCULATION</text>
+  <text x="400" y="198" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="sans-serif">component_cost = qty x unit_cost x commodity_multiplier(month)</text>
+  <text x="400" y="215" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="sans-serif">+ overhead (% of materials) + supplier margin = Should-Cost per unit</text>
+  <line x1="280" y1="225" x2="280" y2="255" stroke="#22c55e" stroke-width="2"/>
+  <line x1="400" y1="225" x2="400" y2="255" stroke="#22c55e" stroke-width="2"/>
+  <line x1="520" y1="225" x2="520" y2="255" stroke="#22c55e" stroke-width="2"/>
   <rect x="180" y="255" width="150" height="50" rx="8" fill="#14532d" stroke="#22c55e"/>
-  <text x="255" y="275" text-anchor="middle" fill="#86efac" font-size="10" font-weight="bold">TIME SERIES</text>
-  <text x="255" y="292" text-anchor="middle" fill="#f1f5f9" font-size="10">Historical trend</text>
-  
-  <rect x="350" y="255" width="150" height="50" rx="8" fill="#1e293b" stroke="#7c3aed"/>
-  <text x="425" y="275" text-anchor="middle" fill="#c4b5fd" font-size="10" font-weight="bold">12-MO FORECAST</text>
-  <text x="425" y="292" text-anchor="middle" fill="#f1f5f9" font-size="10">±1.5σ interval</text>
-  
-  <rect x="520" y="255" width="150" height="50" rx="8" fill="#1e293b" stroke="#f59e0b"/>
-  <text x="595" y="275" text-anchor="middle" fill="#fde68a" font-size="10" font-weight="bold">VARIANCE</text>
-  <text x="595" y="292" text-anchor="middle" fill="#f1f5f9" font-size="10">Actual vs. Should</text>
-  
-  <!-- Action -->
-  <rect x="200" y="330" width="400" height="45" rx="8" fill="#1e293b" stroke="#ef4444"/>
-  <text x="400" y="350" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="bold">ACTION RECOMMENDATION</text>
-  <text x="400" y="367" text-anchor="middle" fill="#f1f5f9" font-size="10">🔴 >+15%: Negotiate  🟡 +5-15%: Request breakdown  ⚪ ±5%: Monitor  🔵 <-5%: Validate quality</text>
+  <text x="255" y="275" text-anchor="middle" fill="#86efac" font-size="10" font-weight="bold" font-family="sans-serif">TIME SERIES</text>
+  <text x="255" y="292" text-anchor="middle" fill="#f1f5f9" font-size="10" font-family="sans-serif">Historical trend</text>
+  <rect x="325" y="255" width="150" height="50" rx="8" fill="#1e293b" stroke="#7c3aed"/>
+  <text x="400" y="275" text-anchor="middle" fill="#c4b5fd" font-size="10" font-weight="bold" font-family="sans-serif">12-MO FORECAST</text>
+  <text x="400" y="292" text-anchor="middle" fill="#f1f5f9" font-size="10" font-family="sans-serif">+/-1.5 sigma interval</text>
+  <rect x="500" y="255" width="150" height="50" rx="8" fill="#1e293b" stroke="#f59e0b"/>
+  <text x="575" y="275" text-anchor="middle" fill="#fde68a" font-size="10" font-weight="bold" font-family="sans-serif">VARIANCE</text>
+  <text x="575" y="292" text-anchor="middle" fill="#f1f5f9" font-size="10" font-family="sans-serif">Actual vs. Should</text>
+  <rect x="200" y="330" width="400" height="40" rx="8" fill="#1e293b" stroke="#ef4444"/>
+  <text x="400" y="350" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="bold" font-family="sans-serif">ACTION RECOMMENDATION</text>
+  <text x="400" y="365" text-anchor="middle" fill="#f1f5f9" font-size="9" font-family="sans-serif">+15%: Negotiate | +5-15%: Request breakdown | +/-5%: Monitor | -5%: Validate quality</text>
 </svg>
