@@ -15,34 +15,7 @@ Most sourcing teams negotiate against last year's price plus a gut feeling. This
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     FRED API (Public)                            │
-│  PPI indices · Global metal prices · FX rates · Energy          │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │ monthly observations
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    COMMODITY ENGINE                               │
-│  Fetch → Cache → Normalize to base period → Monthly multipliers │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   BOM COST MODEL                                  │
-│  For each component:  qty × unit_cost × commodity_multiplier     │
-│  + overhead (% of materials)                                     │
-│  + supplier margin                                               │
-│  = Should-Cost per unit                                          │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-           ┌───────────────┼───────────────┐
-           ▼               ▼               ▼
-   ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-   │  Historical  │ │   Forecast   │ │   Variance   │
-   │  Time Series │ │  (12 month)  │ │   Analysis   │
-   └──────────────┘ └──────────────┘ └──────────────┘
-```
+![Should-Cost Architecture](assets/architecture.svg)
 
 ## Key Concepts
 

@@ -15,40 +15,11 @@ In most supply chains, the first signal that a PO is late arrives when the carri
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        DATA INGESTION                            │
-│  SOT History (CSV)  │  Open PO List (CSV)  │  Planning Data     │
-└──────────┬──────────┴──────────┬───────────┴──────────┬─────────┘
-           │                     │                      │
-           ▼                     ▼                      ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    FEATURE ENGINEERING                            │
-│  Supplier OTIF  │  Lead-time CV  │  Delivery delta  │  Inventory│
-│  MG4/PL rates   │  Confirm lag   │  Transit delta   │  Shortage │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                 MODEL + CALIBRATION                               │
-│  LightGBM (400 trees)  →  Isotonic Calibration  →  P(late)      │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    SCORING & OUTPUT                               │
-│  risk_score = P(late) × impact($)                                │
-│  Tier: HIGH (≥0.60) / MEDIUM (≥0.35) / LOW                      │
-│  Confidence: f(history_depth, ECE)                               │
-│  Company-wide % rollup                                           │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   STREAMLIT DASHBOARD                             │
-│  Supplier risk heatmap  │  PO-level drill-down  │  Backtest KPIs│
-└─────────────────────────────────────────────────────────────────┘
-```
+![Pipeline Architecture](assets/architecture.svg)
+
+## 📓 Interactive Demo
+
+**[→ Open the demo notebook (demo.ipynb)](demo.ipynb)** to see the full pipeline running end-to-end with visualizations — GitHub renders it inline, no setup needed.
 
 ## Key Design Decisions
 
