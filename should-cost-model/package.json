@@ -1,0 +1,12 @@
+{
+  "name": "should-cost-model",
+  "version": "1.0.0",
+  "description": "BOM-level should-cost modeling framework with FRED commodity integration",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve . --listen 3000"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "license": "MIT"
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tariff & Landed Cost Calculator</title>
+  <style>
+    :root { --bg: #0f172a; --surface: #1e293b; --border: #334155; --text: #f1f5f9; --muted: #94a3b8; --accent: #3b82f6; --green: #22c55e; --red: #ef4444; --amber: #f59e0b; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+    h1 { font-size: 1.5rem; margin-bottom: 8px; }
+    .subtitle { color: var(--muted); margin-bottom: 24px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .metric { text-align: center; }
+    .metric-value { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+    .metric-label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 500; }
+    .green { color: var(--green); } .red { color: var(--red); } .amber { color: var(--amber); }
+    .upload-area { border: 2px dashed var(--border); border-radius: 12px; padding: 40px; text-align: center; cursor: pointer; margin-bottom: 24px; }
+    .upload-area:hover { border-color: var(--accent); }
+    input[type="file"] { display: none; }
+    button { background: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+    button:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <h1>🌐 Tariff & Landed Cost Calculator</h1>
+  <p class="subtitle">Upload SKU pricing data to compute true landed costs, margins, and tariff exposure</p>
+
+  <div class="upload-area" onclick="document.getElementById('file-input').click()">
+    <p>📁 Drop CSV/Excel here or click to upload</p>
+    <p style="color: var(--muted); font-size: 0.8rem; margin-top: 8px;">Columns: Material, Description, Supplier, StdNet, StdCost, PB00, COO, HTS Code</p>
+    <input type="file" id="file-input" accept=".csv,.xlsx,.xls">
+  </div>
+
+  <div id="results" style="display:none">
+    <div class="grid" id="summary-metrics"></div>
+    <div class="card">
+      <h3 style="margin-bottom: 12px;">SKU Landed Cost Breakdown</h3>
+      <table id="sku-table">
+        <thead>
+          <tr><th>Material</th><th>COO</th><th>FOB</th><th>Freight</th><th>Duty</th><th>Landed</th><th>Net Price</th><th>Margin</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom: 12px;">Origin Concentration</h3>
+      <table id="concentration-table">
+        <thead><tr><th>Country</th><th>Spend</th><th>% of Total</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" id="demo-section">
+    <button onclick="loadDemoData()">Load Demo Data (10 sample SKUs)</button>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="tariff-engine.js"></script>
+  <script>
+    function loadDemoData() {
+      const demoSkus = [
+        { material: 'ELEC-001', description: 'Wireless Speaker Module', supplier: 'Shenzhen Audio', fobPrice: 38.50, netPrice: 89.99, coo: 'CN', htsCode: '8518.22.00' },
+        { material: 'ELEC-002', description: 'Bluetooth Adapter PCB', supplier: 'VN Electronics', fobPrice: 9.20, netPrice: 24.99, coo: 'VN', htsCode: '8542.31.00' },
+        { material: 'MECH-001', description: 'Precision Gear Assembly', supplier: 'Thai Precision', fobPrice: 62.00, netPrice: 145.00, coo: 'TH', htsCode: '8479.89.00' },
+        { material: 'CASE-001', description: 'Molded Carrying Case', supplier: 'Jakarta Cases', fobPrice: 15.80, netPrice: 34.99, coo: 'ID', htsCode: '4202.92.00' },
+        { material: 'CABL-001', description: 'USB-C Braided Cable 2m', supplier: 'Dongguan Cables', fobPrice: 4.50, netPrice: 12.99, coo: 'CN', htsCode: '8544.42.00' },
+        { material: 'ELEC-003', description: 'Digital Display Module', supplier: 'MY Tech Sdn', fobPrice: 28.00, netPrice: 67.50, coo: 'MY', htsCode: '8471.60.00' },
+        { material: 'MECH-002', description: 'Aluminum Housing CNC', supplier: 'Guadalajara Mfg', fobPrice: 48.00, netPrice: 92.00, coo: 'MX', htsCode: '7616.99.00' },
+        { material: 'ELEC-004', description: 'Power Supply Unit', supplier: 'Seoul Power', fobPrice: 22.50, netPrice: 55.00, coo: 'KR', htsCode: '8504.40.00' },
+        { material: 'CABL-002', description: 'Fiber Optic Patch Cable', supplier: 'Osaka Fiber', fobPrice: 14.00, netPrice: 28.50, coo: 'JP', htsCode: '8544.70.00' },
+        { material: 'PACK-001', description: 'Retail Box Set', supplier: 'Shanghai Pkg', fobPrice: 3.20, netPrice: 8.99, coo: 'CN', htsCode: '4819.10.00' },
+      ];
+      renderResults(demoSkus);
+    }
+
+    function renderResults(skus) {
+      document.getElementById('demo-section').style.display = 'none';
+      document.getElementById('results').style.display = 'block';
+      const summary = computePortfolioSummary(skus);
+
+      // Summary metrics
+      document.getElementById('summary-metrics').innerHTML = `
+        <div class="card metric"><div class="metric-value">${summary.totalSkus}</div><div class="metric-label">Active SKUs</div></div>
+        <div class="card metric"><div class="metric-value">$${summary.totalDuty.toFixed(2)}</div><div class="metric-label">Total Duty (per-unit sum)</div></div>
+        <div class="card metric"><div class="metric-value">${(summary.weightedMargin * 100).toFixed(1)}%</div><div class="metric-label">Weighted Margin (landed)</div></div>
+        <div class="card metric"><div class="metric-value ${summary.atRiskCount > 0 ? 'red' : 'green'}">${summary.atRiskCount}</div><div class="metric-label">SKUs < 15% Margin</div></div>
+      `;
+
+      // SKU table
+      const tbody = document.querySelector('#sku-table tbody');
+      tbody.innerHTML = skus.filter(isValidForTariffAnalysis).map(function(sku) {
+        const lc = computeLandedCost(sku);
+        const margin = computeMarginFromLanded(sku.netPrice, lc);
+        const marginClass = margin.marginPct >= 0.30 ? 'green' : margin.marginPct >= 0.15 ? '' : 'red';
+        return '<tr>' +
+          '<td>' + sku.material + '</td>' +
+          '<td>' + sku.coo + '</td>' +
+          '<td>$' + lc.fob.toFixed(2) + '</td>' +
+          '<td>$' + lc.freight.toFixed(2) + '</td>' +
+          '<td>$' + lc.duty.toFixed(2) + ' (' + (lc.dutyRate * 100).toFixed(0) + '%)</td>' +
+          '<td><strong>$' + lc.landed.toFixed(2) + '</strong></td>' +
+          '<td>$' + sku.netPrice.toFixed(2) + '</td>' +
+          '<td class="' + marginClass + '">' + (margin.marginPct * 100).toFixed(1) + '%</td>' +
+          '</tr>';
+      }).join('');
+
+      // Concentration table
+      const concBody = document.querySelector('#concentration-table tbody');
+      concBody.innerHTML = summary.concentration.all.map(function(c) {
+        return '<tr><td>' + (COO_TARIFF_RATES[c.coo]?.label || c.coo) + '</td><td>$' + c.spend.toFixed(2) + '</td><td>' + (c.pct * 100).toFixed(1) + '%</td></tr>';
+      }).join('');
+    }
+
+    // File upload handler
+    document.getElementById('file-input').addEventListener('change', function() {
+      var file = this.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var lines = e.target.result.split('\n').filter(l => l.trim());
+        var headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+        var skus = [];
+        for (var i = 1; i < lines.length; i++) {
+          var cols = lines[i].split(',');
+          if (cols.length < 8) continue;
+          skus.push({
+            material: cols[0].trim(),
+            description: cols[1].trim(),
+            supplier: cols[2].trim(),
+            netPrice: parseFloat(cols[3]) || 0,
+            stdCost: parseFloat(cols[4]) || 0,
+            fobPrice: parseFloat(cols[5]) || 0,
+            coo: cols[6].trim().toUpperCase(),
+            htsCode: cols[7].trim(),
+          });
+        }
+        renderResults(skus);
+      };
+      reader.readAsText(file);
+    });
+  </script>
+</body>
+</html>

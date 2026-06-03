@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Should-Cost Model</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>📊 Should-Cost Modeling Framework</h1>
+    <p class="subtitle">BOM-level cost models driven by public commodity indices (FRED API)</p>
+    <span id="last-updated" class="status-badge">Loading commodity data...</span>
+  </header>
+
+  <nav>
+    <button class="nav-btn active" data-page="dashboard">Dashboard</button>
+    <button class="nav-btn" data-page="category-detail">Category Detail</button>
+    <button class="nav-btn" data-page="commodity-tracker">Commodity Tracker</button>
+    <button class="nav-btn" data-page="forecast">12-Month Forecast</button>
+  </nav>
+
+  <main id="main">
+    <div id="page-dashboard" class="page active"></div>
+    <div id="page-category-detail" class="page"></div>
+    <div id="page-commodity-tracker" class="page"></div>
+    <div id="page-forecast" class="page"></div>
+  </main>
+
+  <script src="config.example.js"></script>
+  <script>if (typeof FRED_API_KEY === 'undefined') var FRED_API_KEY = '';</script>
+  <script src="data.js"></script>
+  <script src="fred.js"></script>
+  <script src="models.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
