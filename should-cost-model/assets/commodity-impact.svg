@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" font-family="system-ui, -apple-system, sans-serif">
+  <rect width="800" height="350" fill="#0f172a" rx="12"/>
+  
+  <text x="400" y="28" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="bold">How Commodity Prices Flow to Should-Cost</text>
+  
+  <!-- Example: USB-C Cable -->
+  <text x="400" y="55" text-anchor="middle" fill="#94a3b8" font-size="10">Example: USB-C Cable — base cost $1.82 in Jan 2022</text>
+  
+  <!-- Commodity columns -->
+  <rect x="40" y="75" width="170" height="100" rx="8" fill="#1e293b" stroke="#7c3aed"/>
+  <text x="125" y="95" text-anchor="middle" fill="#c4b5fd" font-size="10" font-weight="bold">COPPER</text>
+  <text x="125" y="115" text-anchor="middle" fill="#f1f5f9" font-size="9">Jan 2022: $9,782/MT</text>
+  <text x="125" y="132" text-anchor="middle" fill="#f1f5f9" font-size="9">Jun 2025: $9,835/MT</text>
+  <text x="125" y="155" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="bold">Multiplier: 1.005×</text>
+  <text x="125" y="170" text-anchor="middle" fill="#94a3b8" font-size="8">→ conductor wire +0.5%</text>
+  
+  <rect x="230" y="75" width="170" height="100" rx="8" fill="#1e293b" stroke="#3b82f6"/>
+  <text x="315" y="95" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="bold">NICKEL</text>
+  <text x="315" y="115" text-anchor="middle" fill="#f1f5f9" font-size="9">Jan 2022: $22,300/MT</text>
+  <text x="315" y="132" text-anchor="middle" fill="#f1f5f9" font-size="9">Jun 2025: $15,100/MT</text>
+  <text x="315" y="155" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="bold">Multiplier: 0.677×</text>
+  <text x="315" y="170" text-anchor="middle" fill="#94a3b8" font-size="8">→ connector plating −32%</text>
+  
+  <rect x="420" y="75" width="170" height="100" rx="8" fill="#1e293b" stroke="#16a34a"/>
+  <text x="505" y="95" text-anchor="middle" fill="#86efac" font-size="10" font-weight="bold">TEXTILES PPI</text>
+  <text x="505" y="115" text-anchor="middle" fill="#f1f5f9" font-size="9">Jan 2022: 118</text>
+  <text x="505" y="132" text-anchor="middle" fill="#f1f5f9" font-size="9">Jun 2025: 121</text>
+  <text x="505" y="155" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="bold">Multiplier: 1.025×</text>
+  <text x="505" y="170" text-anchor="middle" fill="#94a3b8" font-size="8">→ nylon braid +2.5%</text>
+  
+  <rect x="610" y="75" width="170" height="100" rx="8" fill="#1e293b" stroke="#dc2626"/>
+  <text x="695" y="95" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="bold">ELECTRONICS PPI</text>
+  <text x="695" y="115" text-anchor="middle" fill="#f1f5f9" font-size="9">Jan 2022: 102</text>
+  <text x="695" y="132" text-anchor="middle" fill="#f1f5f9" font-size="9">Jun 2025: 89</text>
+  <text x="695" y="155" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="bold">Multiplier: 0.873×</text>
+  <text x="695" y="170" text-anchor="middle" fill="#94a3b8" font-size="8">→ E-marker chip −13%</text>
+  
+  <!-- Arrows down -->
+  <path d="M125 175 L125 205 L400 205 L400 215" stroke="#64748b" fill="none" stroke-width="1.5"/>
+  <path d="M315 175 L315 205 L400 205" stroke="#64748b" fill="none" stroke-width="1.5"/>
+  <path d="M505 175 L505 205 L400 205" stroke="#64748b" fill="none" stroke-width="1.5"/>
+  <path d="M695 175 L695 205 L400 205" stroke="#64748b" fill="none" stroke-width="1.5"/>
+  
+  <!-- Result -->
+  <rect x="200" y="215" width="400" height="55" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
+  <text x="400" y="237" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="bold">SHOULD-COST RESULT (Jun 2025)</text>
+  <text x="400" y="258" text-anchor="middle" fill="#f1f5f9" font-size="12">Base $1.82 → Current <tspan font-weight="bold" fill="#22c55e">$1.68</tspan> (−7.7% from base)</text>
+  
+  <!-- Action -->
+  <rect x="200" y="285" width="400" height="35" rx="6" fill="#14532d" stroke="#22c55e"/>
+  <text x="400" y="307" text-anchor="middle" fill="#86efac" font-size="10">⚪ Monitor — should-cost dropped due to nickel + electronics deflation</text>
+  
+  <!-- Footer -->
+  <text x="400" y="340" text-anchor="middle" fill="#475569" font-size="9">All indices from FRED (Federal Reserve Economic Data) — free, public, updated monthly</text>
+</svg>

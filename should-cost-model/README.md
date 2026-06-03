@@ -19,6 +19,10 @@ Most sourcing teams negotiate against last year's price plus a gut feeling. This
 
 ## Key Concepts
 
+### How Commodity Prices Flow to Should-Cost
+
+![Commodity Impact](assets/commodity-impact.svg)
+
 ### Commodity Multiplier
 Each BOM component is linked to a FRED series. The multiplier normalizes the current index value against a base period, so a copper price of $9,500/MT against a 2020 base of $6,000/MT produces a multiplier of 1.58×.
 

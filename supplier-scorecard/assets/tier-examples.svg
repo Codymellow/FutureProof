@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" font-family="system-ui, -apple-system, sans-serif">
+  <rect width="800" height="300" fill="#0f172a" rx="12"/>
+  
+  <text x="400" y="28" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="bold">Tier Classification — Example Suppliers</text>
+  
+  <!-- Header row -->
+  <text x="50" y="60" fill="#64748b" font-size="9" font-weight="bold">SUPPLIER</text>
+  <text x="210" y="60" fill="#64748b" font-size="9" font-weight="bold">SOT</text>
+  <text x="300" y="60" fill="#64748b" font-size="9" font-weight="bold">QUALITY</text>
+  <text x="400" y="60" fill="#64748b" font-size="9" font-weight="bold">PRICING</text>
+  <text x="500" y="60" fill="#64748b" font-size="9" font-weight="bold">COMM</text>
+  <text x="590" y="60" fill="#64748b" font-size="9" font-weight="bold">COMPOSITE</text>
+  <text x="700" y="60" fill="#64748b" font-size="9" font-weight="bold">TIER</text>
+  
+  <line x1="30" y1="68" x2="770" y2="68" stroke="#334155" stroke-width="1"/>
+  
+  <!-- Supplier A: Strategic -->
+  <text x="50" y="92" fill="#f1f5f9" font-size="11">Rhine Industrial</text>
+  <rect x="195" y="78" width="40" height="20" rx="4" fill="#14532d"/><text x="215" y="92" text-anchor="middle" fill="#22c55e" font-size="10">96%</text>
+  <rect x="285" y="78" width="40" height="20" rx="4" fill="#14532d"/><text x="305" y="92" text-anchor="middle" fill="#22c55e" font-size="10">92</text>
+  <rect x="385" y="78" width="40" height="20" rx="4" fill="#14532d"/><text x="405" y="92" text-anchor="middle" fill="#22c55e" font-size="10">-0.4</text>
+  <rect x="485" y="78" width="40" height="20" rx="4" fill="#14532d"/><text x="505" y="92" text-anchor="middle" fill="#22c55e" font-size="10">8.7</text>
+  <text x="590" y="92" fill="#f1f5f9" font-size="12" font-weight="bold">92.4</text>
+  <rect x="660" y="78" width="90" height="20" rx="10" fill="#14532d" stroke="#22c55e"/><text x="705" y="92" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="bold">Strategic</text>
+  
+  <!-- Supplier B: Preferred -->
+  <text x="50" y="130" fill="#f1f5f9" font-size="11">Pacific Components</text>
+  <rect x="195" y="116" width="40" height="20" rx="4" fill="#14532d"/><text x="215" y="130" text-anchor="middle" fill="#22c55e" font-size="10">91%</text>
+  <rect x="285" y="116" width="40" height="20" rx="4" fill="#14532d"/><text x="305" y="130" text-anchor="middle" fill="#22c55e" font-size="10">85</text>
+  <rect x="385" y="116" width="40" height="20" rx="4" fill="#422006"/><text x="405" y="130" text-anchor="middle" fill="#f59e0b" font-size="10">+1.2</text>
+  <rect x="485" y="116" width="40" height="20" rx="4" fill="#14532d"/><text x="505" y="130" text-anchor="middle" fill="#22c55e" font-size="10">8.1</text>
+  <text x="590" y="130" fill="#f1f5f9" font-size="12" font-weight="bold">84.7</text>
+  <rect x="660" y="116" width="90" height="20" rx="10" fill="#1e3a5f" stroke="#3b82f6"/><text x="705" y="130" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="bold">Preferred</text>
+  
+  <!-- Supplier C: Approved -->
+  <text x="50" y="168" fill="#f1f5f9" font-size="11">Siam Electronics</text>
+  <rect x="195" y="154" width="40" height="20" rx="4" fill="#422006"/><text x="215" y="168" text-anchor="middle" fill="#f59e0b" font-size="10">87%</text>
+  <rect x="285" y="154" width="40" height="20" rx="4" fill="#14532d"/><text x="305" y="168" text-anchor="middle" fill="#22c55e" font-size="10">78</text>
+  <rect x="385" y="154" width="40" height="20" rx="4" fill="#450a0a"/><text x="405" y="168" text-anchor="middle" fill="#ef4444" font-size="10">+3.8</text>
+  <rect x="485" y="154" width="40" height="20" rx="4" fill="#422006"/><text x="505" y="168" text-anchor="middle" fill="#f59e0b" font-size="10">7.2</text>
+  <text x="590" y="168" fill="#f1f5f9" font-size="12" font-weight="bold">72.1</text>
+  <rect x="660" y="154" width="90" height="20" rx="10" fill="#1e293b" stroke="#f59e0b"/><text x="705" y="168" text-anchor="middle" fill="#fde68a" font-size="10" font-weight="bold">Approved</text>
+  
+  <!-- Supplier D: Conditional (red flag) -->
+  <text x="50" y="206" fill="#f1f5f9" font-size="11">Borneo Assembly</text>
+  <rect x="195" y="192" width="40" height="20" rx="4" fill="#450a0a"/><text x="215" y="206" text-anchor="middle" fill="#ef4444" font-size="10">78%</text>
+  <rect x="285" y="192" width="40" height="20" rx="4" fill="#450a0a"/><text x="305" y="206" text-anchor="middle" fill="#ef4444" font-size="10">45</text>
+  <rect x="385" y="192" width="40" height="20" rx="4" fill="#422006"/><text x="405" y="206" text-anchor="middle" fill="#f59e0b" font-size="10">+1.5</text>
+  <rect x="485" y="192" width="40" height="20" rx="4" fill="#450a0a"/><text x="505" y="206" text-anchor="middle" fill="#ef4444" font-size="10">4.8</text>
+  <text x="590" y="206" fill="#f1f5f9" font-size="12" font-weight="bold">58.3</text>
+  <rect x="660" y="192" width="90" height="20" rx="10" fill="#450a0a" stroke="#ef4444"/><text x="705" y="206" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="bold">Conditional</text>
+  
+  <!-- Red flag note -->
+  <text x="50" y="222" fill="#ef4444" font-size="8">⚠️ 3 red pillars → auto-Conditional</text>
+  
+  <line x1="30" y1="238" x2="770" y2="238" stroke="#334155" stroke-width="1"/>
+  
+  <!-- Legend -->
+  <rect x="50" y="250" width="14" height="14" rx="3" fill="#14532d"/>
+  <text x="70" y="262" fill="#94a3b8" font-size="9">Green (meets target)</text>
+  <rect x="220" y="250" width="14" height="14" rx="3" fill="#422006"/>
+  <text x="240" y="262" fill="#94a3b8" font-size="9">Amber (watchlist)</text>
+  <rect x="380" y="250" width="14" height="14" rx="3" fill="#450a0a"/>
+  <text x="400" y="262" fill="#94a3b8" font-size="9">Red (action required)</text>
+  
+  <text x="400" y="288" text-anchor="middle" fill="#475569" font-size="9">All supplier names are synthetic. Scoring methodology is generic and applicable to any supply chain.</text>
+</svg>

@@ -15,36 +15,11 @@ Most supplier performance conversations start with "I feel like they've been bet
 
 ## Scoring Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    CSV DATA UPLOADS                               │
-│  SOT Records │ Quality Returns │ Pricing History │ Survey Data   │
-└──────┬───────┴───────┬─────────┴───────┬─────────┴──────┬───────┘
-       │               │                 │                │
-       ▼               ▼                 ▼                ▼
-┌──────────────┐┌──────────────┐┌──────────────────┐┌─────────────┐
-│ SOT Pillar   ││Quality Pillar││ Pricing Pillar   ││Communication│
-│              ││              ││                  ││   Pillar    │
-│ % On-Time   ││ PPM Score    ││ Δ vs. Regional   ││ Weighted    │
-│ (10-day      ││ (defects/    ││ PPI Inflation    ││ Survey Avg  │
-│  grace)      ││  million)    ││ (FRED API)       ││ (EoDB 70% + │
-│              ││              ││                  ││  Innov 30%) │
-│ Weight: 35%  ││ Weight: 25%  ││ Weight: 20%      ││ Weight: 20% │
-└──────┬───────┘└──────┬───────┘└──────┬───────────┘└──────┬──────┘
-       │               │               │                   │
-       └───────────────┴───────────────┴───────────────────┘
-                                │
-                                ▼
-                   ┌────────────────────────┐
-                   │    COMPOSITE SCORE     │
-                   │    (0–100)             │
-                   │                        │
-                   │  ≥90 + 0 red → Strategic│
-                   │  ≥80 + 0 red → Preferred│
-                   │  ≥65 → Approved        │
-                   │  <65 or 2+ red → Cond. │
-                   └────────────────────────┘
-```
+![4-Pillar Scoring Model](assets/scoring-model.svg)
+
+## Example: Tier Classification in Action
+
+![Tier Examples](assets/tier-examples.svg)
 
 ## Pillar Details
 

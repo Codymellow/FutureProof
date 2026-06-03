@@ -17,37 +17,7 @@ A supplier in China quoting $50 and a supplier in Mexico quoting $58 are not $8 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                   SKU DATA (CSV/XLSX Upload)                      │
-│  Material │ HTS Code │ COO │ FOB Price │ Net Price │ Supplier    │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   TARIFF RATE ENGINE                              │
-│  HTS Code + COO → { base_duty, IEEPA, Section 301/232, total } │
-│  Source: Static tables (HTS lookup) or Descartes API             │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                  LANDED COST CALCULATOR                           │
-│                                                                  │
-│  landed = FOB                                                    │
-│         + FOB × freight_rate_by_coo                              │
-│         + FOB × duty_rate (HTS + COO specific)                   │
-│         + FOB × MPF_HMF_rate (0.4714%)                          │
-│                                                                  │
-│  true_margin = (dealer_net - landed) / dealer_net                │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-           ┌───────────────┼───────────────┐
-           ▼               ▼               ▼
-   ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-   │  Margin      │ │  Scenario    │ │Concentration │
-   │  Analysis    │ │  Modeling    │ │   Risk       │
-   └──────────────┘ └──────────────┘ └──────────────┘
-```
+![Landed Cost Breakdown](assets/landed-cost-breakdown.svg)
 
 ## Current Tariff Rate Table (US Import)
 
