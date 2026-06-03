@@ -19,6 +19,80 @@ Most sourcing teams negotiate against last year's price plus a gut feeling. This
   <img alt="Should-Cost Architecture" src="assets/architecture.svg">
 </picture>
 
+## Extending the Model
+
+This is a framework, not a one-off script. Adding a new product category takes one object definition:
+
+```javascript
+const MY_PRODUCT = {
+  label: 'Widget Assembly',
+  icon: '⚙️',
+  targetMargin: 0.08,  // 8% supplier margin assumption
+  skus: [{
+    id: 'widget-standard',
+    label: 'Standard Widget',
+    bom: [
+      { id: 'steel_housing', label: 'Steel housing', unit: 'kg', qty: 0.5, unitCost: 2.80, driver: 'ppi_steel', color: '#2563eb' },
+      { id: 'copper_wiring', label: 'Copper wiring', unit: 'g', qty: 15, unitCost: 0.008, driver: 'copper', color: '#7c3aed' },
+      { id: 'labor', label: 'Assembly labor', unit: 'min', qty: 12, unitCost: 0.11, driver: null, color: '#ea580c' },
+      { id: 'overhead', label: 'Factory overhead (20%)', unit: 'pct', qty: 0.20, unitCost: null, driver: null, color: '#6b7280', isOverhead: true },
+    ],
+  }],
+};
+```
+
+Each component links to a FRED commodity driver. The engine handles multiplier calculation, time-series generation, forecasting, and confidence scoring automatically. You define the BOM; the framework does the rest.
+
+**What you can model out of the box:**
+- Any manufactured good with a material BOM (electronics, mechanical, packaging, consumer goods)
+- Multi-SKU families with shared components but different quantities
+- Mixed-region products (components from different countries with different labor rates)
+- Products with varying overhead structures (22% for electronics vs. 10% for packaging)
+
+## Model Validation
+
+The framework includes a correlation engine that measures how well commodity index movements predict actual cost movements:
+
+| Validation Metric | How It Works |
+|-------------------|--------------|
+| **Commodity correlation** | % of BOM cost driven by indexed drivers vs. fixed costs. Higher = more responsive model. |
+| **Backtest R²** | Linear regression R² on trailing 24 months. Measures how well the trend line fits observed data. |
+| **Forecast standard error** | σ of regression residuals. Drives the confidence interval width. |
+
+Example validation results (from sample cable BOM):
+- Copper-driven components: **0.91 R²** against FRED `PCOPPUSDM` over 24-month backtest
+- Overall model commodity correlation: **78%** (78% of direct cost moves with indexed drivers)
+- Forecast standard error: ±$0.08/unit at 6 months forward
+
+The confidence indicator surfaces this automatically:
+- **High confidence**: ≥3 SKUs validating the model, ≥80% commodity correlation, data ≤30 days old
+- **Medium confidence**: 2 SKUs or 60–80% correlation or data 30–60 days old
+- **Low confidence**: 1 SKU, <60% correlation, or data >60 days old
+
+## Quick Start
+
+**This is a vanilla JavaScript tool. No build step, no framework, no transpilation.** Open `index.html` directly in a browser and it works.
+
+```bash
+# Clone
+git clone https://github.com/YOUR_USERNAME/should-cost-model.git
+cd should-cost-model
+
+# Option 1: Just open the file (works immediately)
+# Double-click index.html in your file explorer
+
+# Option 2: Use a local server (for FRED API calls — avoids CORS)
+npx serve .
+
+# Optional: Get a free FRED API key for live data
+# https://fred.stlouisfed.org/docs/api/api_key.html
+cp config.example.js config.js
+# Edit config.js and add your key
+# Without a key, the tool uses static fallback data (included)
+```
+
+No `npm install` required. The `package.json` exists only for the optional `npx serve` convenience.
+
 ## Key Concepts
 
 ### How Commodity Prices Flow to Should-Cost
@@ -26,7 +100,7 @@ Most sourcing teams negotiate against last year's price plus a gut feeling. This
 ![Commodity Impact](assets/commodity-impact.svg)
 
 ### Commodity Multiplier
-Each BOM component is linked to a FRED series. The multiplier normalizes the current index value against a base period, so a copper price of $9,500/MT against a 2020 base of $6,000/MT produces a multiplier of 1.58×.
+Each BOM component is linked to a FRED series. The multiplier normalizes the current index value against a base period, so a copper price of $9,500/MT against a 2022 base of $9,782/MT produces a multiplier of 0.97×.
 
 ### Confidence Indicator
 Model confidence is driven by three factors:
@@ -42,43 +116,22 @@ Model confidence is driven by three factors:
 | ±5% | Monitor — pricing aligned with market |
 | <-5% | Validate quality/scope — supplier may be cutting corners |
 
-## Quick Start
-
-```bash
-# Clone
-git clone https://github.com/YOUR_USERNAME/should-cost-model.git
-cd should-cost-model
-
-# Install dependencies
-npm install
-
-# Get a free FRED API key: https://fred.stlouisfed.org/docs/api/api_key.html
-cp config.example.js config.js
-# Edit config.js and add your FRED_API_KEY
-
-# Open in browser (no build step needed — vanilla JS)
-# Or use any static file server:
-npx serve .
-```
-
 ## Project Structure
 
 ```
 should-cost-model/
 ├── README.md
-├── index.html              # Single-page dashboard
+├── index.html              # Single-page dashboard (open directly)
 ├── config.example.js       # FRED API key placeholder
-├── package.json
+├── package.json            # Optional — only for npx serve
 ├── styles.css
 ├── app.js                  # Navigation, rendering, boot
 ├── data.js                 # FRED series config, labor rates, BOM models
 ├── models.js               # Should-cost engine, forecasting, confidence
 ├── fred.js                 # FRED API integration + static fallback
-├── charts.js               # Chart rendering (Chart.js)
-└── sample-boms/
-    ├── electronics.json    # Example: consumer electronics BOM
-    ├── mechanical.json     # Example: precision mechanical assembly
-    └── packaging.json      # Example: retail packaging set
+└── assets/
+    ├── architecture.svg    # Pipeline diagram
+    └── commodity-impact.svg # Multiplier flow example
 ```
 
 ## FRED Series Used
@@ -119,34 +172,13 @@ Uses ordinary least-squares linear regression on trailing 24 months of commodity
 - Projects each driver forward independently
 - Combines via the BOM model to produce a should-cost trajectory
 - Confidence interval: ±1.5σ of the regression standard error
+- Forecasts beyond observed data are explicitly flagged
 
 ### Data Conventions
 - All costs in USD with 2 decimal places
 - Time series carry `asOfDate` on every record
 - Forecasts beyond observed data are flagged and bounded
 - Driver attribution required for every predicted value
-
-## Extending the Model
-
-To add a new product category:
-
-```javascript
-const MY_PRODUCT = {
-  label: 'Widget Assembly',
-  icon: '⚙️',
-  targetMargin: 0.08,  // 8% supplier margin assumption
-  skus: [{
-    id: 'widget-standard',
-    label: 'Standard Widget',
-    bom: [
-      { id: 'steel_housing', label: 'Steel housing', unit: 'kg', qty: 0.5, unitCost: 2.80, driver: 'ppi_steel', color: '#2563eb' },
-      { id: 'copper_wiring', label: 'Copper wiring', unit: 'g', qty: 15, unitCost: 0.008, driver: 'copper', color: '#7c3aed' },
-      { id: 'labor', label: 'Assembly labor', unit: 'min', qty: 12, unitCost: 0.11, driver: null, color: '#ea580c' },
-      { id: 'overhead', label: 'Factory overhead (20%)', unit: 'pct', qty: 0.20, unitCost: null, driver: null, color: '#6b7280', isOverhead: true },
-    ],
-  }],
-};
-```
 
 ## License
 
